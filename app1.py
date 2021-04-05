@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,send_from_directory
+from pywebio.platform.flask import webio_view
+from pywebio import STATIC_PATH
 #import jsonify
 #import requests
 import pickle
@@ -54,6 +56,7 @@ import datetime
 #         return render_template('index.html')
 # =============================================================================
 model = pickle.load(open('cardekho_pred.pkl', 'rb'))
+app1 = Flask(__name__)
 #standard_to = StandardScaler()
 def hitman():
     Year=int(input("Enter the car year of purchse",type='number'))
@@ -82,11 +85,18 @@ def hitman():
         Transmission_Mannual=0
     prediction=model.predict([[current_price,km_driven2,owner,Year,Fuel_Type_Diesel,Fuel_Type_Petrol,Seller_Type_Individual,Transmission_Mannual]])
     output=round(prediction[0],2)
-    put_text('The resale value of your car is : %.1f lakhs ' %(output))
+    if output <= 0:
+        put_text("Oops...! you cannot sell your car")
+    else:
+        put_text('The resale value of your car is : %.1f lakhs ' %(output))
+    app.add_url_rule('/hitman', 'webio_view', webio_view(hitman),
+            methods=['GET', 'POST', 'OPTIONS'])
     
     
 
 if __name__=="__main__":
     #app.run(debug=True)
-    hitman()
+    app1.run(debug=True)
+
+
 
