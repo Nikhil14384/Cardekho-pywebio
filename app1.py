@@ -93,9 +93,9 @@ app1.add_url_rule('/hitman', 'webio_view', webio_view(hitman),methods=['GET', 'P
     
     
 
-if __name__=="__main__":
+#if __name__=="__main__":
     #app.run(debug=True)
-    app1.run(debug=True)
+app1.run(debug=True)
 
 
 
