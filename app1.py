@@ -89,8 +89,7 @@ def hitman():
         put_text("Oops...! you cannot sell your car")
     else:
         put_text('The resale value of your car is : %.1f lakhs ' %(output))
-    app1.add_url_rule('/hitman', 'webio_view', webio_view(hitman),
-            methods=['GET', 'POST', 'OPTIONS'])
+app1.add_url_rule('/hitman', 'webio_view', webio_view(hitman),methods=['GET', 'POST', 'OPTIONS'])
     
     
 
