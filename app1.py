@@ -10,6 +10,8 @@ import sklearn
 from pywebio.input import *
 from pywebio.output import *
 import datetime
+import argparse
+from pywebio import start_server
 
 model = pickle.load(open('cardekho_pred.pkl', 'rb'))
 app1 = Flask(__name__)
@@ -48,10 +50,15 @@ def hitman():
 app1.add_url_rule('/hitman', 'webio_view', webio_view(hitman),methods=['GET', 'POST', 'OPTIONS'])
     
     
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--port", type=int, default=8080)
+    args = parser.parse_args()
 
-#if __name__=="__main__":
-    #app.run(debug=True)
-app1.run(debug=True)
+    start_server(predict, port=args.port)
+    
+   
+#app1.run(debug=True)
 
 
 
